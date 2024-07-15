@@ -1,0 +1,20 @@
+{% load static  %}
+{% load i18n %}
+
+<div class="modal js-modal" data-modal="role">
+	{% comment %} <div class="modal__overlay js-modal-close"></div> {% endcomment %}
+
+	<div class="modal__block modal-night text-center">
+		{% comment %} <img src="{% static 'images/header/header__moon-white.svg' %}" width="60" heigth="60"> {% endcomment %}
+
+        <div class="margin-top-20" style="color: #fff">
+			{% trans 'Выберите Вашу роль' %}
+		</div>
+
+		<div class="margin-top-30 margin-bottom-20">
+            <a class="btn btn-night" href="{% url 'main:about' %}">{% trans 'Фрилансер' %}</a>
+			{% comment %} <button class="btn-night js-modal-close">{% trans 'Фрилансер' %}</button> {% endcomment %}
+			<button class="btn-night btn-opacity-70 js-modal-btn-day js-modal-close">{% trans 'Заказчик' %}</button>
+		</div>
+	</div>
+</div>

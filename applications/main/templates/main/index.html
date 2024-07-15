@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+
+{% block full_title %}{{ preference.site_title }}{% endblock full_title %}
+
+
+{% block head %}
+	<meta name="description" content="{{ preference.site_description }}">
+	<meta property="og:title" content="{{ preference.site_title }}"/>
+	<meta property="og:description" content="{{ preference.site_description }}"/>
+	<meta property="og:type" content="website"/>
+	{% if preference.site_photo %}
+		<meta property="og:image" content="{{ preference.site_photo.url }}" />
+	{% endif %}
+{% endblock head %}
+
+
+{% block header_class %}{% endblock header_class %}
+
+
+{% block content %}
+	<section class="slider js-swiper" data-swiper='{"autoplay": true, "slidesPerView": 1, "spaceBetween": 0, "loop": true, "effect": "fade", "speed": 800, "breakpoints": []}'>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				{% for slide in slide_list %}
+					<div class="swiper-slide slider__slide" style="background-image: url('{{ slide.photo.url }}')">
+						<div class="container">
+							<div class="row justify-content-center">
+								<div class="col-md-8 col-lg-6">
+									<div class="slider__content">
+										<div class="slider__title">
+											<a class="slider__link" href="{{ slide.button_url }}">
+												{{ slide.title|linebreaksbr }}
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div class="slider__framewrap">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="slider__frame">
+							<div class="slider__arrow slider__arrow-left">
+								<a class="slider__arrowimage slider__arrowimage-left js-swiper-left" href="javascript:void(0);"></a>
+							</div>
+
+							<ul class="slider__points js-swiper-pagination"></ul>
+
+							<div class="slider__arrow slider__arrow-right">
+								<a class="slider__arrowimage slider__arrowimage-right js-swiper-right" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="slider__border slider__border-left"></div>
+		<div class="slider__border slider__border-right"></div>
+	</section>
+
+	{% if index_content.content_1 %}
+		<section class="padding-top-40">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10 offset-md-1">
+						<div class="content">
+							{{ index_content.content_1|safe }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% if popular_list %}
+		<section class="padding-top-40 padding-bottom-40">
+			<div class="container js-swiper" data-swiper='{"spaceBetween": 20, "slidesPerView": 3, "breakpoints": {"576":{"slidesPerView": 1.2}}}'>
+				<div class="row">
+					<div class="col-lg-9 offset-lg-3">
+						<h2 class="title margin-bottom-30">
+							{% trans 'НАШИ УСЛУГИ' %}
+						</h2>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<div class="swiper-container">
+							<div class="swiper-wrapper padding-top-20 padding-bottom-20">
+								{% for popular in popular_list %}
+									<div class="swiper-slide swiper-load">
+										{% include "blocks/card-popular.html" with popular=popular %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-9 offset-lg-3">
+						<div class="arrow__block">
+							<a class="arrow arrow-left js-swiper-left" href="javascript:void(0);"></a>
+
+							<ul class="arrow__points js-swiper-pagination"></ul>
+
+							<a class="arrow arrow-right js-swiper-right" href="javascript:void(0);"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% if index_content.content_2 %}
+		<section class="padding-bottom-40">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10 offset-md-1">
+						<div class="content">
+							{{ index_content.content_2|safe }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% comment %} {% if indexvideo_list %}
+		<section class="padding-bottom-40">
+			<div class="container js-swiper" data-swiper='{"slidesPerView": "2", "loop": true, "spaceBetween": 20, "breakpoints": []}'>
+				<div class="row padding-top-30 padding-bottom-40">
+					<div class="col">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								{% for indexvideo in indexvideo_list %}
+									<div class="swiper-slide">
+										{% include "blocks/indexvideo.html" with indexvideo=indexvideo %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-9 offset-lg-3">
+						<div class="arrow__block">
+							<a class="arrow arrow-left js-swiper-left" href="javascript:void(0);"></a>
+
+							<ul class="arrow__points js-swiper-pagination"></ul>
+
+							<a class="arrow arrow-right js-swiper-right" href="javascript:void(0);"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %} {% endcomment %}
+{% endblock content %}
+
+{% block footer_js %}
+
+	{% comment %}
+	<script src="https://cdn.jsdelivr.net/npm/modal-video@2/js/jquery-modal-video.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modal-video@2/css/modal-video.min.css">
+	{% endcomment %}
+
+	{% comment %} <script src="{% static 'scripts/npm/node_modules/modal-video/js/jquery-modal-video.min.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'scripts/npm/node_modules/modal-video/css/modal-video.min.css' %}">
+
+	<script>
+		$('.js-modal-video').modalVideo();
+	</script> {% endcomment %}
+
+{% endblock footer_js %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+
+
+{% block title %}О нас{% endblock title %}
+
+
+{% block content %}
+	<section class="padding-top-60 padding-bottom-30">
+		<div class="container">
+			<div class="row margin-bottom-20">
+				<div class="col-md-5 offset-md-3">
+					<h1 class="title__h1">
+						{% trans 'О нас' %}
+					</h1>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col offset-md-3">
+					<ul class="breadcrumb">
+						<li>
+							<a href="/">{% trans 'Главная' %}</a>
+						</li>
+
+						<li>
+							{% trans 'О нас' %}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="padding-top-40 padding-bottom-30 js-subnav-anchor">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3"></div>
+
+				<div class="col-md-9">
+					<div id="about">
+						<div class="row">
+							<div class="col-md-10">
+								<div class="content js-photo-content">
+									{{ object.content_1|safe }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% if object.photos.count %}
+		<section class="section section-white padding-top-40 padding-bottom-70">
+			<div class="container">
+				<div class="js-swiper" data-swiper='{"slidesPerView": "auto", "spaceBetween": 20}'>
+					<div class="row">
+						<div class="col">
+							<div class="swiper-container">
+								<div class="swiper-wrapper">
+									{% for photo in object.photos.all %}
+										{% thumbnail photo.photo 0x150 upscale as thumb %}
+										<div class="swiper-slide" style="width:{{ thumb.width }}px;">
+											<a class="photo__item photo__item-certificate js-photo" href="{{ photo.photo.url }}" data-fancybox-group="clinic">
+												<img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}">
+											</a>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row margin-top-30">
+						<div class="col offset-md-3">
+							<div class="arrow__block">
+								<a class="arrow arrow-left js-swiper-left" href="javascript:void(0);"></a>
+
+								<ul class="arrow__points js-swiper-pagination"></ul>
+
+								<a class="arrow arrow-right js-swiper-right" href="javascript:void(0);"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+
+	<section class="padding-bottom-30">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2"></div>
+
+				<div class="col-md-9 offset-md-1">
+					<div class="row">
+						<div class="col-md-10">
+							<div class="content js-photo-content">
+								{{ object.content_2|safe }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock content %}

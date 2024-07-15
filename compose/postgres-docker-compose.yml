@@ -1,0 +1,27 @@
+# docker ps -a
+# docker-compose -f docker-compose.yml up -d
+# docker-compose -f docker-compose.yml down -v
+# подключиться к контейнеру созданной бд можно командой:
+# docker exec -it wallet_postgres psql --username=wallet --dbname=wallet
+
+
+version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: geoapps_postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: geoapps
+      POSTGRES_USER: geoapps
+      POSTGRES_DB: geoapps
+    volumes:
+      - ../var/postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres-data:

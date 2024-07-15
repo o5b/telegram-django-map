@@ -1,0 +1,19 @@
+{% load static  %}
+{% load i18n %}
+
+<div class="modal js-modal" data-modal="night">
+	<div class="modal__overlay js-modal-close"></div>
+
+	<div class="modal__block modal-night text-center">
+		<img src="{% static 'images/header/header__moon-white.svg' %}" width="60" heigth="60">
+
+        <div class="margin-top-20">
+			{% trans 'Мы включили ночной режим, чтобы <br>защитить Ваши глаза от яркого экрана' %}
+		</div>
+
+		<div class="margin-top-30 margin-bottom-20">
+			<button class="btn-night js-modal-close">{% trans 'Продолжить' %}</button>
+			<button class="btn-night btn-opacity-70 js-modal-btn-day js-modal-close">{% trans 'Отменить' %}</button>
+		</div>
+	</div>
+</div>
