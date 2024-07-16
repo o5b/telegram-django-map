@@ -170,7 +170,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         open_website_text = open_website_text_en
         message_text = message_text_another_language
 
-    site_domain = 'https://dc8e-91-211-135-87.ngrok-free.app'
+    site_domain = 'https://2df7-91-211-135-87.ngrok-free.app'
 
     reply_markup = ReplyKeyboardMarkup.from_column(
         [
