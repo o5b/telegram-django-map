@@ -4,8 +4,8 @@
 
 ```bash
 # clone the repository
-https://github.com/o5b/...git
-cd project-folder/
+git clone https://github.com/o5b/telegram-django-map.git
+cd telegram-django-map/
 # install and activate the virtual environment
 python3.12 -m venv venv
 source venv/bin/activate
@@ -65,7 +65,7 @@ DJANGO_SUPERUSER_EMAIL=admin@example.com
 ## Preparation Django
 
 ```bash
-cd project-folder/
+cd telegram-django-map/
 # if not activated yet, then activate the virtual environment
 source venv/bin/activate
 python manage.py makemigrations
@@ -77,7 +77,7 @@ python manage.py collectstatic
 ### Running Django
 
 ```bash
-cd project-folder/
+cd telegram-django-map/
 # if not activated yet, then activate the virtual environment
 source venv/bin/activate
 python -m uvicorn --reload settings.asgi:application
@@ -90,7 +90,7 @@ Now you can login to the admin site: http://127.0.0.1:8000/admin/
 Run the telegram bot in another console
 
 ```bash
-cd project-folder/
+cd telegram-django-map/
 # if not activated yet, then activate the virtual environment
 source venv/bin/activate
 python bot.py
@@ -98,31 +98,6 @@ python bot.py
 
 Now you can open the application in telegram.
 
-### Django-modeltranslation
-
-#### Synchronizing Model Fields
-
-```
-python manage.py sync_translation_fields
-```
-
-#### If you need to transfer the data that was originally in the model to the fields created by django-modeltranslation
-
-```
-python manage.py update_translation_fields
-```
-
-### Add test data to the database
-
-```
-python manage.py loaddata fixtures/db.json
-```
-
-#### If you need to save data from the database to fixtures
-
-```
-python manage.py dumpdata capture main services --indent 2 > fixtures/db.json
-```
 ## Demo
 
 Map

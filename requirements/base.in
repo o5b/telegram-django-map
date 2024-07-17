@@ -1,6 +1,7 @@
 django
 django-model-utils
 django-cleanup
+django-extensions
 pillow
 python-dotenv
 python-telegram-bot
@@ -10,6 +11,3 @@ wait-for-it # for docker
 djangorestframework-simplejwt
 django-admin-inline-paginator
 django-rosetta
-django-ckeditor
-django-admin-sortable2
-django-modeltranslation

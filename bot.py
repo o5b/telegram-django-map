@@ -92,19 +92,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         'raw_data': user_data.to_dict(),
     }
 
-    if user_data.language_code in map(lambda x: x[0], settings.LANGUAGES):
-        site_language = user_data.language_code
-    else:
-        site_language = settings.LANGUAGE_CODE
+    # user, created = await update_or_create_user(telegram_id=user_data.id, defaults=user_info)
+    user, created = await create_user(telegram_id=user_data.id, defaults=user_info)
 
-    # if user_info['telegram_language'] in map(lambda x: x[0], settings.LANGUAGES):
-    #     site_language = user_info['telegram_language']
+    # if user_data.language_code in map(lambda x: x[0], settings.LANGUAGES):
+    #     site_language = user_data.language_code
     # else:
     #     site_language = settings.LANGUAGE_CODE
 
-    # user, created = await update_or_create_user(telegram_id=user_data.id, defaults=user_info)
-    user, created = await create_user(telegram_id=user_data.id, defaults=user_info)
-    print()
+    if user.telegram_language and (user.telegram_language in map(lambda x: x[0], settings.LANGUAGES)):
+        site_language = user.telegram_language
+    elif user_data.language_code and (user_data.language_code in map(lambda x: x[0], settings.LANGUAGES)):
+        site_language = user_data.language_code
+    else:
+        site_language = settings.LANGUAGE_CODE
 
     url_params = {}
 
@@ -125,22 +126,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     open_settings_text_ru = 'Открыть Настройки'
     open_settings_text_uk = 'Відкрийте налаштування'
 
-    open_website_text_en = 'Open Web Site'
-    open_website_text_ru = 'Открыть Веб Сайт'
-    open_website_text_uk = 'Відкрийте Веб Сайт'
-
     message_text_en = (
         "♥️ Hello! I am a demo application for <b>localization on a map</b> of places with <b>garbage</b>."
         + "\n\nYour language code: <b>en</b>"
     )
 
     message_text_ru = (
-        "♥️ Привет! Я демо-приложение для <b>локализации на карте</b> мест с <b>мусором</b>."
+        "♥️ Приветствую! Я демо-приложение для <b>локализации на карте</b> мест с <b>мусором</b>."
         + "\n\nКод Вашего языка: <b>ru</b>"
     )
 
     message_text_uk = (
-        "♥️ Привіт! Я демонстраційний додаток для <b>локалізації на карті</b> місць зі <b>сміттям</b>."
+        "♥️ Вітаю! Я демонстраційний додаток для <b>локалізації на карті</b> місць зі <b>сміттям</b>."
         + "\n\nКод Вашої мови: <b>uk</b>"
     )
 
@@ -152,30 +149,28 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if user_data.language_code == 'en':
         open_map_text = open_map_text_en
         open_settings_text = open_settings_text_en
-        open_website_text = open_website_text_en
         message_text = message_text_en
+
     elif user_data.language_code == 'ru':
         open_map_text = open_map_text_ru
         open_settings_text = open_settings_text_ru
-        open_website_text = open_website_text_ru
         message_text = message_text_ru
+
     elif user_data.language_code == 'uk':
         open_map_text = open_map_text_uk
         open_settings_text = open_settings_text_uk
-        open_website_text = open_website_text_uk
         message_text = message_text_uk
+
     else:
         open_map_text = open_map_text_en
         open_settings_text = open_settings_text_en
-        open_website_text = open_website_text_en
         message_text = message_text_another_language
 
-    site_domain = 'https://2df7-91-211-135-87.ngrok-free.app'
+    site_domain = 'https://ab73-91-211-135-87.ngrok-free.app'
 
     reply_markup = ReplyKeyboardMarkup.from_column(
         [
             KeyboardButton(
-                # text='Open Map',
                 text=open_map_text,
                 web_app=WebAppInfo(
                     url=add_get_params_to_url(
@@ -187,21 +182,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             ),
 
             KeyboardButton(
-                # text='Open Settings',
                 text=open_settings_text,
                 web_app=WebAppInfo(
                     url=add_get_params_to_url(
                         f'{site_domain}/{site_language}/account/user/settings/', url_params
-                    )
-                ),
-            ),
-
-            KeyboardButton(
-                # text='Open Web Site',
-                text=open_website_text,
-                web_app=WebAppInfo(
-                    url=add_get_params_to_url(
-                        f'{site_domain}/{site_language}/main/', url_params
                     )
                 ),
             ),
@@ -245,10 +229,6 @@ def run_bot(bot_token: str) -> None:
 
 
 if __name__ == "__main__":
-    # load_dotenv()  # load variables from .env file
-
-    # for run from ./bot/bot.py
-    # dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
 
     env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
     load_dotenv(env_path)

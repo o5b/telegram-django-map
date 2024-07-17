@@ -34,10 +34,13 @@
             background-color: #f1f1f1;
         }
 
+        .content {
+            margin: 10px;
+        }
         #map-container {
             position: relative;
-            height: 200px;
-            width: 400px;
+            height: 150px;
+            width: 300px;
         }
 
         .center-of-map:before {
@@ -65,69 +68,72 @@
 {% endblock head %}
 
 {% block content %}
+    <div class="content">
 
-    {% if user %}
-        <div>
-            <h1>{% trans 'User data:' %}</h1>
-            {% if form_save_result %}<p>{% trans 'Result:' %} {{ form_save_result }}</p>{% endif %}
-
-            <p>{% trans 'User ID:' %} {{ user.id }}</p>
-            <p>{% trans 'User First name:' %} {{ user.first_name }}</p>
-            <p>{% trans 'User Last name:' %} {{ user.last_name }}</p>
-            <p>{% trans 'Username:' %} {{ user.username }}</p>
-            <p>{% trans 'Telegram id:' %} {{ user.telegram_id }}</p>
-            <p>{% trans 'Telegram username:' %} {{ user.telegram_username }}</p>
-            <p>{% trans 'Telegram language:' %} {{ user.telegram_language }}</p>
-            <p>{% trans 'Is bot:' %} {{ user.is_bot }}</p>
-
-            <hr>
-            <p>{% trans 'Current tokens' %}</p>
-            <p>{% trans 'refresh token:' %} ...{{ refresh_token|slice:"-4:" }}</p>
-            <p>{% trans 'access token:' %} ...{{ access_token|slice:"-4:" }}</p>
-            <hr>
-
-            <p>{% trans 'Starting coordinates and zoom:' %}</p>
-            <div id="map-container">
-                <div id="map-settings" class="center-of-map"></div>
-                <div class="center-of-map-description"></div>
-            </div>
-            <hr>
-
-            {% if user_form %}
-                <h2>{% trans 'Editing user data:' %}</h2>
-
-                <form action="." method="post">
-                    {% csrf_token %}
-                    {{ user_form.as_p }}
-                    <p><input type="submit" value="Save changes"></p>
-                </form>
-
-            {% endif %}
-            <br>
-            <hr>
-            <br>
+        {% if user %}
             <div>
-                <p>{% trans 'Markers created by the current user:' %}</p>
-                <br>
-                {% for marker in user_markers %}
-                    <div>
-                        <p><b>{% trans 'Marker ID:' %}</b> {{ marker.id }}</p>
-                        <p><b>{% trans 'Time:' %}</b> {{ marker.time }}</p>
-                        <p><b>{% trans 'Message:' %}</b> {{ marker.message }}</p>
-                        <p><b>{% trans 'Latitude:' %}</b> {{ marker.latitude }}</p>
-                        <p><b>{% trans 'Longitude:' %}</b> {{ marker.longitude }}</p>
-                        <p><b>{% trans 'Photo:' %}</b> {% if marker.photo %}<img src="{{ marker.photo.url }}" width=200px>{% endif %}</p>
-                        <br>
-                    </div>
-                {% endfor %}
-            </div>
-            <br><br>
+                <h1>{% trans 'User data:' %}</h1>
+                {% if form_save_result %}<p>{% trans 'Result:' %} {{ form_save_result }}</p>{% endif %}
 
-        </div>
-    {% else %}
-        <p class="errornote">{% trans 'You need to be a authenticated to access this page.' %}</p>
-        <p class="errornote">{% trans 'You need to run the "/start" command in Telegram for your authentication.' %}</p>
-    {% endif %}
+                <p>{% trans 'User ID:' %} {{ user.id }}</p>
+                <p>{% trans 'User First name:' %} {{ user.first_name }}</p>
+                <p>{% trans 'User Last name:' %} {{ user.last_name }}</p>
+                <p>{% trans 'Username:' %} {{ user.username }}</p>
+                <p>{% trans 'Telegram id:' %} {{ user.telegram_id }}</p>
+                <p>{% trans 'Telegram username:' %} {{ user.telegram_username }}</p>
+                <p>{% trans 'Telegram language:' %} {{ user.telegram_language }}</p>
+                <p>{% trans 'Is bot:' %} {{ user.is_bot }}</p>
+
+                <hr>
+                <p>{% trans 'Current tokens' %}</p>
+                <p>{% trans 'refresh token:' %} ...{{ refresh_token|slice:"-4:" }}</p>
+                <p>{% trans 'access token:' %} ...{{ access_token|slice:"-4:" }}</p>
+                <hr>
+
+                <p>{% trans 'Starting coordinates and zoom:' %}</p>
+                <div id="map-container">
+                    <div id="map-settings" class="center-of-map"></div>
+                    <div class="center-of-map-description"></div>
+                </div>
+                <hr>
+
+                {% if user_form %}
+                    <h2>{% trans 'Editing user data:' %}</h2>
+
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        {{ user_form.as_p }}
+                        <p><input type="submit" value="Save changes"></p>
+                    </form>
+
+                {% endif %}
+                <br>
+                <hr>
+                <br>
+                <div>
+                    <p>{% trans 'Markers created by the current user:' %}</p>
+                    <br>
+                    {% for marker in user_markers %}
+                        <div>
+                            <p><b>{% trans 'Marker ID:' %}</b> {{ marker.id }}</p>
+                            <p><b>{% trans 'Time:' %}</b> {{ marker.time }}</p>
+                            <p><b>{% trans 'Message:' %}</b> {{ marker.message }}</p>
+                            <p><b>{% trans 'Latitude:' %}</b> {{ marker.latitude }}</p>
+                            <p><b>{% trans 'Longitude:' %}</b> {{ marker.longitude }}</p>
+                            <p><b>{% trans 'Photo:' %}</b> {% if marker.photo %}<img src="{{ marker.photo.url }}" width=200px>{% endif %}</p>
+                            <br>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br><br>
+
+            </div>
+        {% else %}
+            <p class="errornote">{% trans 'You need to be a authenticated to access this page.' %}</p>
+            <p class="errornote">{% trans 'You need to run the "/start" command in Telegram for your authentication.' %}</p>
+        {% endif %}
+
+    </div>
 
     <script>
         const refresh = "{{ refresh_token|safe }}";
@@ -141,31 +147,28 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script>
-    console.log('******** test 14');
+    console.log('******** test 1');
     let tg = window.Telegram.WebApp;
     tg.expand(); //разворачиваем на все окно
-
-    //const searchParams = new URLSearchParams(window.location.search);
-    //console.log('***** searchParams:');
-    //console.log(searchParams);
 
     const expire = new Date();
     expire.setHours(expire.getHours() + (24 * 10));
 
-    // получаем токены переданные при вводе в telegram команды "/start"
-    //if (searchParams.has('refresh')) {
-    //    setCookie('refreshToken', searchParams.get('refresh'), options = {expires: expire});
-    //};
+    // создаём новый pathname с префиксом языка. en - по умолчанию
+    let newLocationPathname = '/en/account/user/settings/'
 
-    //if (searchParams.has('access')) {
-    //    setCookie('accessToken', searchParams.get('access'), options = {expires: expire});
-    //};
+    if (window.location.pathname.startsWith('/en')){
+        newLocationPathname = '/en/account/user/settings/';
+    } else if (window.location.pathname.startsWith('/ru')){
+        newLocationPathname = '/ru/account/user/settings/';
+    } else if (window.location.pathname.startsWith('/uk')){
+        newLocationPathname = '/uk/account/user/settings/';
+    }
 
-    // без лишних проверок сразу обновляем access токен
-    //refreshToken();
+    console.log('***** newLocationPathname: ' + newLocationPathname);
+    // очищаем url от токенов переданных при запуске команды "/start" из telegram
+    window.history.replaceState({}, 'Settings page', newLocationPathname);
 
-    // очищаем url от токенов переданных при вводе в telegram команды "/start"
-    window.history.replaceState({}, 'Settings page', '/account/user/settings/');
 
     if (refresh) {
         setCookie('refreshToken', refresh, options = {expires: expire});
@@ -184,6 +187,7 @@
     /////////////////////////
     //document.addEventListener("DOMContentLoaded", updateSettingsPage);
 
+    /*
     function updateSettingsPage() {
         console.log('********* updateSettingsPage');
 
@@ -196,7 +200,9 @@
             });
 
     }
+    */
 
+    /*
     async function fetchDataForSettingsPage(url) {
         //const newAccessToken = await refreshToken();
         console.log('*******  fetchDataForSettingsPage');
@@ -228,6 +234,7 @@
             throw error;
         }
     }
+    */
 
     async function refreshToken() {
         const refreshToken = getCookie('refreshToken');
@@ -316,9 +323,7 @@
     }
 
     ////////////// map ///////////////
-
-    /* eslint-disable no-undef */
-    /**
+    /*
     * Coordinates of the center of the visible map
     */
 

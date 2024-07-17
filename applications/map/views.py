@@ -9,6 +9,7 @@ from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.serializers import TokenVerifySerializer
 
+from applications.core.utils import get_tokens
 from applications.map import models
 from applications.map.serializer import (MarkerDeleteSerializer,
                                          MarkerGetSerializer,
@@ -39,44 +40,44 @@ class IsOwner(BasePermission):
         return False
 
 
-def get_tokens(request):
-    access = ''
-    refresh = ''
+# def get_tokens(request):
+#     access = ''
+#     refresh = ''
 
-    if request.method == 'GET':
-        # получаем JWT токены из параметров запроса
-        access = request.GET.get('access')
-        print(f'******* def get_tokens(request): access:**{access}**')
-        refresh = request.GET.get('refresh')
-        print(f'******* def get_tokens(request): refresh:**{refresh}**')
+#     if request.method == 'GET':
+#         # получаем JWT токены из параметров запроса
+#         access = request.GET.get('access')
+#         print(f'******* def get_tokens(request): access:**{access}**')
+#         refresh = request.GET.get('refresh')
+#         print(f'******* def get_tokens(request): refresh:**{refresh}**')
 
-    if not access or not refresh:
-        if hasattr(request, 'headers') and request.headers:
-            print(f'******** request.headers: {request.headers}')
+#     if not access or not refresh:
+#         if hasattr(request, 'headers') and request.headers:
+#             print(f'******** request.headers: {request.headers}')
 
-            # получаем JWT токены из Cookie
-            if 'Cookie' in request.headers and request.headers['Cookie']:
-                cookie_list = request.headers['Cookie'].split()
-                for cookie in cookie_list:
-                    print(f'******  cookie: {cookie}')
-                    if cookie[-1] == ';':
-                        cookie = cookie[:-1]
-                    if 'refreshToken=' in cookie:
-                        refresh = cookie.split('=')[1]
-                        # print(f'***** cookie refresh: {refresh}')
-                    if 'accessToken=' in cookie:
-                        access = cookie.split('=')[1]
-                        # print(f'***** cookie access: {access}')
+#             # получаем JWT токены из Cookie
+#             if 'Cookie' in request.headers and request.headers['Cookie']:
+#                 cookie_list = request.headers['Cookie'].split()
+#                 for cookie in cookie_list:
+#                     print(f'******  cookie: {cookie}')
+#                     if cookie[-1] == ';':
+#                         cookie = cookie[:-1]
+#                     if 'refreshToken=' in cookie:
+#                         refresh = cookie.split('=')[1]
+#                         # print(f'***** cookie refresh: {refresh}')
+#                     if 'accessToken=' in cookie:
+#                         access = cookie.split('=')[1]
+#                         # print(f'***** cookie access: {access}')
 
-            # получаем access токен из Token Bearer Authorization
-            if not access and 'Authorization' in request.headers and request.headers['Authorization']:
-                authorization_list = request.headers['Authorization'].split()
-                if len(authorization_list) == 2:
-                    if authorization_list[0] == 'Bearer':
-                        access = authorization_list[1]
-                        print(f'***** Authorization access: {access}')
+#             # получаем access токен из Token Bearer Authorization
+#             if not access and 'Authorization' in request.headers and request.headers['Authorization']:
+#                 authorization_list = request.headers['Authorization'].split()
+#                 if len(authorization_list) == 2:
+#                     if authorization_list[0] == 'Bearer':
+#                         access = authorization_list[1]
+#                         print(f'***** Authorization access: {access}')
 
-    return access, refresh
+#     return access, refresh
 
 
 class IndexView(generic.TemplateView):
@@ -84,9 +85,7 @@ class IndexView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # print('******* IndexView dir self: ', dir(self))
-        # print('******* IndexView dir self.request: ', dir(self.request))
-        # print('******* IndexView self.request.headers: ', self.request.headers)
+
         user = ''
         access = ''
         refresh = ''

@@ -204,8 +204,8 @@ tmp/
 letsencrypt/
 
 # Django
-media/
-static/
+# media/
+# static/
 
 # logs/
 
