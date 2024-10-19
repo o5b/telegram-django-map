@@ -12,7 +12,7 @@ const searchParams = new URLSearchParams(window.location.search);
 const expire = new Date();
 expire.setHours(expire.getHours() + (24 * 10));
 
-// получаем токены переданные при "/start" из telegram
+// получаем токены переданные при запуске в telegram команды "/start"
 if (searchParams.has('refresh')) {
     setCookie('refreshToken', searchParams.get('refresh'), options = {expires: expire});
 };
@@ -35,10 +35,14 @@ if (window.location.pathname.startsWith('/en')){
 // очищаем url от токенов переданных при "/start" из telegram
 window.history.replaceState({}, 'Main page', newLocationPathname);
 
-// magnification with which the map will start
+// settings with which the map will start
+// let zoom = 12;
+// let lat = 51.32761;
+// let lng = 26.61541;
 let zoom = 12;
-let lat = 51.32761;
-let lng = 26.61541;
+let lat = 48.72672;
+let lng = 2.37854;
+
 
 if (mapLatitudeCenter && mapLongitudeCenter) {
     lat = mapLatitudeCenter;
@@ -763,7 +767,6 @@ function setCookie(name, value, options = {}) {
 
     options = {
         path: '/',
-        // при необходимости добавьте другие значения по умолчанию
         ...options
     };
 
@@ -786,8 +789,8 @@ function setCookie(name, value, options = {}) {
 }
 
 
-function deleteCookie(name) {
-    setCookie(name, "", {
-        'max-age': -1
-    })
-}
+// function deleteCookie(name) {
+//     setCookie(name, "", {
+//         'max-age': -1
+//     })
+// }

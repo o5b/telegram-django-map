@@ -1,4 +1,5 @@
 # import requests
+import pprint
 # import json
 # from django.conf import settings
 # from django.contrib import messages
@@ -68,6 +69,7 @@ def user_settings_page(request):
                 form_save_result = _('User data saved successfully.')
 
     if user:
+        pprint.pp(user)
         user_form = forms.UserForm(instance=user)
         user_markers = [marker for marker in user.markers.filter(status='published')]
         pprint.pprint(user_markers)

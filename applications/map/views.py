@@ -91,6 +91,9 @@ class IndexView(generic.TemplateView):
         refresh = ''
         access_token = ''
         refresh_token = ''
+        default_latitude_center = '48.72672'
+        default_longitude_center = '2.37854'
+        default_map_zoom = '8'
 
         access, refresh = get_tokens(self.request)
 
@@ -120,9 +123,9 @@ class IndexView(generic.TemplateView):
                 refresh_token = str(refresh_token_obj)
                 access_token = str(refresh_token_obj.access_token)
 
-            context['latitude_center'] = user.latitude_center
-            context['longitude_center'] = user.longitude_center
-            context['map_zoom'] = user.map_zoom
+            context['latitude_center'] = user.latitude_center or default_latitude_center
+            context['longitude_center'] = user.longitude_center or default_longitude_center
+            context['map_zoom'] = user.map_zoom or default_map_zoom
             context['refresh_token'] = refresh_token
             context['access_token'] = access_token
 

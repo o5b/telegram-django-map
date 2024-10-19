@@ -128,17 +128,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     message_text_en = (
         "♥️ Hello! I am a demo application for <b>localization on a map</b> of places with <b>garbage</b>."
-        + "\n\nYour language code: <b>en</b>"
+        + "\n\nYour language code: <b>English: en</b>"
     )
 
     message_text_ru = (
         "♥️ Приветствую! Я демо-приложение для <b>локализации на карте</b> мест с <b>мусором</b>."
-        + "\n\nКод Вашего языка: <b>ru</b>"
+        + "\n\nКод Вашего языка: <b>Russian: ru</b>"
     )
 
     message_text_uk = (
         "♥️ Вітаю! Я демонстраційний додаток для <b>локалізації на карті</b> місць зі <b>сміттям</b>."
-        + "\n\nКод Вашої мови: <b>uk</b>"
+        + "\n\nКод Вашої мови: <b>Ukrainian: uk</b>"
     )
 
     message_text_another_language = (
@@ -166,7 +166,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         open_settings_text = open_settings_text_en
         message_text = message_text_another_language
 
-    site_domain = 'https://ab73-91-211-135-87.ngrok-free.app'
+    # site_domain = 'https://fe05-91-211-135-120.ngrok-free.app'
+    site_domain = os.getenv("DJANGO_DOMAIN_HOST")
 
     reply_markup = ReplyKeyboardMarkup.from_column(
         [
@@ -174,9 +175,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 text=open_map_text,
                 web_app=WebAppInfo(
                     url=add_get_params_to_url(
-                        # site_domain, url_params
                         f'{site_domain}/{site_language}/', url_params
-                        # f"https://3649-91-211-135-87.ngrok-free.app/{site_language}/", user_info
                     )
                 ),
             ),
@@ -235,6 +234,7 @@ if __name__ == "__main__":
 
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     print('****** bot_token: ', bot_token)
+
     if not bot_token:
         raise ValueError("Invalid TELEGRAM_BOT_TOKEN in .env file")
 

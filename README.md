@@ -1,5 +1,7 @@
 # Telegram Mini Apps for geo-positioning of places with garbage
 
+### The application is under development
+
 ## Installation
 
 ```bash
@@ -60,6 +62,7 @@ DJANGO_ADMIN_EMAIL=
 DJANGO_SUPERUSER_USERNAME=admin
 DJANGO_SUPERUSER_PASSWORD=django_superuser_password
 DJANGO_SUPERUSER_EMAIL=admin@example.com
+DJANGO_DOMAIN_HOST='your-domain'
 ```
 
 ## Preparation Django
@@ -108,8 +111,10 @@ Settings
 
 ![demo](docs/demo-settings.gif)
 
+Admin-site
+
+![demo](docs/admin-site.gif)
+
 Site
 
 ![demo](docs/demo-site.gif)
-
-Приложение в процессе разработки. Состояние видно на демо.
