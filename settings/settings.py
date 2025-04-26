@@ -178,7 +178,10 @@ MEDIA_URL = os.getenv('DJANGO_MEDIA_URL', 'media/')
 STATIC_URL = 'static/'
 
 if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend'),) # здесь collectstatic также будет искать файлы
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')         # сюда collectstatic поместит найденные файлы
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = 'media/'
 else:
     STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT')
     STATICFILES_DIRS = [BASE_DIR / 'static']

@@ -62,7 +62,15 @@ DJANGO_ADMIN_EMAIL=
 DJANGO_SUPERUSER_USERNAME=admin
 DJANGO_SUPERUSER_PASSWORD=django_superuser_password
 DJANGO_SUPERUSER_EMAIL=admin@example.com
-DJANGO_DOMAIN_HOST='your-domain'
+DJANGO_DOMAIN_HOST='your-https-domain'
+```
+
+For local development `DJANGO_DEBUG=1`
+
+`DJANGO_DOMAIN_HOST` - The host must be https. For local development, you can use ngrok:
+
+```
+ngrok http 8000
 ```
 
 ## Preparation Django

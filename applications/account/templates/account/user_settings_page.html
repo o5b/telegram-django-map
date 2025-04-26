@@ -62,8 +62,8 @@
         }
     </style>
 
-    <link rel="stylesheet" href="{% static 'styles/leaflet_1.6.0/dist/leaflet.css' %}">
-    <script src="{% static 'scripts/leaflet_1.6.0/dist/leaflet.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'styles/leaflet_1.6.0/leaflet.css' %}">
+    <script src="{% static 'scripts/leaflet_1.6.0/leaflet.js' %}"></script>
 
 {% endblock head %}
 
@@ -333,9 +333,9 @@
         maxZoom: 18,
     };
     // magnification with which the map will start
-    let zoom = 12;
-    let lat = 51.32761;
-    let lng = 26.61541;
+    let zoom = 8;
+    let lat = 48.56706;
+    let lng = 2.36206;
 
     let mapCenterLatitude = document.getElementById('id_latitude_center');
     let mapCenterLongitude = document.getElementById('id_longitude_center');

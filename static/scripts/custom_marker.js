@@ -12,7 +12,7 @@ const searchParams = new URLSearchParams(window.location.search);
 const expire = new Date();
 expire.setHours(expire.getHours() + (24 * 10));
 
-// получаем токены переданные при запуске в telegram команды "/start"
+// получаем токены переданные при "/start" из telegram
 if (searchParams.has('refresh')) {
     setCookie('refreshToken', searchParams.get('refresh'), options = {expires: expire});
 };
@@ -35,14 +35,10 @@ if (window.location.pathname.startsWith('/en')){
 // очищаем url от токенов переданных при "/start" из telegram
 window.history.replaceState({}, 'Main page', newLocationPathname);
 
-// settings with which the map will start
-// let zoom = 12;
-// let lat = 51.32761;
-// let lng = 26.61541;
-let zoom = 12;
-let lat = 48.72672;
-let lng = 2.37854;
-
+// magnification with which the map will start
+let zoom = 8;
+let lat = 48.56706;
+let lng = 2.36206;
 
 if (mapLatitudeCenter && mapLongitudeCenter) {
     lat = mapLatitudeCenter;
@@ -129,9 +125,9 @@ let addMarkerButton = document.getElementById('addMarkerButton');
 addMarkerButton.addEventListener('click', addMarker);
 
 var addMarkerIcon = L.icon({
-    iconUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-icon-purple.png",
-    iconRetinaUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-icon-2x-purple.png",
-    shadowUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-shadow.png",
+    iconUrl:"/static/styles/leaflet_1.6.0/images/marker-icon-purple.png",
+    iconRetinaUrl:"/static/styles/leaflet_1.6.0/images/marker-icon-2x-purple.png",
+    shadowUrl:"/static/styles/leaflet_1.6.0/images/marker-shadow.png",
     iconSize:[25,41],
     iconAnchor:[12,41],
     popupAnchor:[1,-34],
@@ -217,9 +213,9 @@ async function fetchDataForGetListMarker(url) {
 }
 
 var currentUserIcon = L.icon({
-    iconUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-icon-dark-blue.png",
-    iconRetinaUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-icon-2x-dark-blue.png",
-    shadowUrl:"/static/styles/leaflet_1.6.0/dist/images/marker-shadow.png",
+    iconUrl:"/static/styles/leaflet_1.6.0/images/marker-icon-dark-blue.png",
+    iconRetinaUrl:"/static/styles/leaflet_1.6.0/images/marker-icon-2x-dark-blue.png",
+    shadowUrl:"/static/styles/leaflet_1.6.0/images/marker-shadow.png",
     iconSize:[25,41],
     iconAnchor:[12,41],
     popupAnchor:[1,-34],
@@ -767,6 +763,7 @@ function setCookie(name, value, options = {}) {
 
     options = {
         path: '/',
+        // при необходимости добавьте другие значения по умолчанию
         ...options
     };
 
@@ -789,8 +786,8 @@ function setCookie(name, value, options = {}) {
 }
 
 
-// function deleteCookie(name) {
-//     setCookie(name, "", {
-//         'max-age': -1
-//     })
-// }
+function deleteCookie(name) {
+    setCookie(name, "", {
+        'max-age': -1
+    })
+}

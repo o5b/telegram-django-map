@@ -12,8 +12,6 @@ from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 # from django.views.generic import TemplateView
 from django.utils.translation import gettext_lazy as _
 
-import pprint
-
 from django.http import HttpResponse
 
 from applications.core.utils import get_tokens
